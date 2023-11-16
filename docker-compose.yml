@@ -1,0 +1,14 @@
+---
+version: "3.8"
+
+services:
+  ipsec_exporter:
+    container_name: ipsec_exporter
+    build: .
+    restart: always
+    command: "./ipsec_exporter --collector=ipsec --ipsec.command='/usr/sbin/ipsec statusall || true'"
+    volumes:
+      - "/var/run/charon.pid:/var/run/charon.pid"
+      - "/var/run/charon.ctl:/var/run/charon.ctl"
+    ports:
+      - "127.0.0.1:9903:9903"
